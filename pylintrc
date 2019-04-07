@@ -1,0 +1,9 @@
+[basic]
+variable-rgx=[a-z_][a-z0-9_]{,30}$
+argument-rgx=[a-z_][a-z0-9_]{,30}$
+
+[format]
+max-line-length=80
+indent-string='  '
+indent-after-paren=2
+expected-line-ending-format=LF

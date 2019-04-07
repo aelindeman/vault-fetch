@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "title": "vault-fetch configuration schema",
+  "required": [
+    "secrets"
+  ],
+  "properties": {
+    "secrets": {
+      "$id": "#/properties/secrets",
+      "type": "array",
+      "title": "secrets",
+      "items": {
+        "$id": "#/properties/secrets/items",
+        "type": "object",
+        "title": "configuration for items in Vault",
+        "required": [
+          "path",
+          "filename"
+        ],
+        "properties": {
+          "path": {
+            "$id": "#/properties/secrets/items/properties/path",
+            "type": "string",
+            "title": "the Vault secret path",
+            "examples": [
+              "secret/foo"
+            ]
+          },
+          "filename": {
+            "$id": "#/properties/secrets/items/properties/filename",
+            "type": "string",
+            "title": "the filename to write the secret's contents to",
+            "examples": [
+              "/tmp/vault-fetch/foo"
+            ]
+          },
+          "field": {
+            "$id": "#/properties/secrets/items/properties/field",
+            "type": [
+              "array",
+              "null",
+              "string"
+            ],
+            "title": "the field(s) to write to <filename>: if a string, only that field's value is written; if an array, each of those fields' values is written to the same file <filename> with each field's value separated by a newline in the order in which the fields are specified; if not specified or null, the entire secret is written as JSON",
+            "examples": [
+              "foo",
+              [
+                "foo",
+                "bar"
+              ]
+            ],
+            "items": {
+              "$id": "#/properties/secrets/items/properties/field/items",
+              "type": "string",
+              "title": "field(s) to write, each field is written to the same file <filename> with each field's value separated by a newline in the order in which the fields are specified"
+            }
+          },
+          "template": {
+            "$id": "#/properties/secrets/items/properties/template",
+            "type": "string",
+            "title": "string containing field name placeholders (e.g. `${field}`) that can render the secret in place within a file",
+            "examples": [
+              "foo = ${foo}"
+            ]
+          },
+          "template_file": {
+            "$id": "#/properties/secrets/items/properties/template_file",
+            "type": "string",
+            "title": "path to a file containing a template",
+            "examples": [
+              "/opt/vault-fetch/templates/foo"
+            ]
+          },
+          "critical": {
+            "$id": "#/properties/secrets/items/properties/critical",
+            "default": false,
+            "type": "boolean",
+            "title": "controls whether vault-fetch exits, rather than skipping and continuing, if an error occurs while writing a secret",
+            "examples": [
+              "true",
+              "false"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
